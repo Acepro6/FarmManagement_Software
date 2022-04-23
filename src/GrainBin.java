@@ -1,4 +1,4 @@
-/*  Bin.java
+/*  GrainBin.java
  *  Created by:     Arthur Fritzke
  *  Date:           March 28th, 2022
  *  Last Author:    Arthur Fritzke
@@ -18,7 +18,7 @@ public class GrainBin implements StorageUnit{
     String name;
 
     // Type of grain
-    String grainType;
+    String grainType = "None";
 
     /**
      * Constructor
@@ -39,6 +39,19 @@ public class GrainBin implements StorageUnit{
     }
 
     /**
+     * get type of grain in bin
+     * @return STRING, grain type
+     */
+    public String getGrainType() {return this.grainType;}
+
+    /**
+     * set type of grain in bin
+     * @param grain STRING, grain type
+     * @postcon Grain is now set to a new type
+     */
+    public void setGrainType(String grain) {this.grainType = grain;}
+
+    /**
      * get max capacity of bin
      * @return INTEGER, capacity value
      */
@@ -51,7 +64,11 @@ public class GrainBin implements StorageUnit{
      * @param x integer value describing how much grain is being added
      * @return integer describes surplus in removal number
      */
-    public int addGrain(int x) {
+    public int addGrain(int x, String grain) {
+        if (!grain.equals(this.grainType)) {
+            System.out.print("WRONG GRAIN TYPE");
+        }
+
         if (!this.isFull()) {
             if (this.current + x < this.capacity) {
                 this.current += x;
@@ -111,8 +128,8 @@ public class GrainBin implements StorageUnit{
     }
 
     public String toString() {
-        return "\nBin name: " + this.name + "\nCurrent Load: " + this.getCurrent() +
-                "\nCapacity: " + this.getCapacity() + "\n";
+        return "\nBin name: " + this.name + "\nGrain type: " + this.grainType + "\nCurrent Load: " + this.getCurrent()
+                + "\nCapacity: " + this.getCapacity() + "\n";
     }
 
     /**
@@ -125,6 +142,11 @@ public class GrainBin implements StorageUnit{
      public static void main(String[] args) {
         // Testing
          GrainBin w106 = new GrainBin("W106", 5000);
+         if (!w106.getGrainType().equals("None")) {
+             System.out.print("Grain type was not properly stored on construction\n");
+         }
+
+         w106.setGrainType("Durum");
          System.out.print(w106.toString());
          if (!w106.isEmpty()) {
             System.out.print("Bin is returning false but should be true for empty status\n");
@@ -141,9 +163,12 @@ public class GrainBin implements StorageUnit{
          if (!w106.getName().equals("W106")) {
              System.out.print("Bin name was not correctly set\n");
          }
+         if (!w106.getGrainType().equals("Durum")) {
+             System.out.print("Grain type was not correctly set.\n");
+         }
 
          // non-empty addgrain test
-         w106.addGrain(2000);
+         w106.addGrain(2000, "Durum");
          System.out.print(w106.toString());
          if (w106.isEmpty()) {
              System.out.print("Bin is returning true but should be false for empty status\n");
@@ -186,8 +211,8 @@ public class GrainBin implements StorageUnit{
          }
 
          // empty addGrain test past capacity
-         w106.addGrain(2500);
-         int leftover = w106.addGrain(4000);
+         w106.addGrain(2500, "Durum");
+         int leftover = w106.addGrain(4000, "Durum");
          System.out.print(w106.toString());
          if (w106.isEmpty()) {
              System.out.print("Bin is returning true but should be false for empty status\n");
