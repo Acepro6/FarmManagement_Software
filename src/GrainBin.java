@@ -2,10 +2,8 @@
  *  Created by:     Arthur Fritzke
  *  Date:           March 28th, 2022
  *  Last Author:    Arthur Fritzke
- *  Last Modified:  April 10th, 2022
+ *  Last Modified:  April 22nd, 2022
  */
-
-import java.awt.*;
 
 public class GrainBin implements StorageUnit{
     // Maximum amount of bushels to be stored
